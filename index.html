@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <title>Vandan - Namkaran Sanskar</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #FAF6F0;
+      --gold: #C5A46D;
+      --saffron: #E6A15A;
+      --text: #2C2C2C;
+      --footer: #F7C58B;
+      --maroon: #5B0B1B;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    h1, h2 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .custom-navbar {
+      background-color: #e8cfa9;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 10px 30px;
+    }
+
+    .nav-link-custom {
+      font-weight: 600;
+      color: #32241BCC;
+      margin: 0 10px;
+      transition: color 0.3s;
+      text-decoration: none;
+    }
+
+    .nav-link-custom:hover {
+      color: #d97706;
+    }
+
+    .btn-book {
+      background-color: #f28c28;
+      color: white;
+      border-radius: 25px;
+      padding: 8px 18px;
+      font-weight: 600;
+      border: none;
+    }
+
+    .btn-book:hover {
+      background-color: #e67e22;
+    }
+
+    .btn-community {
+      background-color: #c05621;
+      color: white;
+      border-radius: 25px;
+      padding: 8px 18px;
+      font-weight: 600;
+      border: none;
+    }
+
+    .btn-community:hover {
+      background-color: #9c4221;
+    }
+
+    .logo-text {
+      font-size: 20px;
+      font-weight: bold;
+      color: #c05621;
+    }
+    .logo-img {
+  height: 40px;   /* adjust based on your design */
+  width: auto;
+  object-fit: contain;
+}
+  
+    /* HEADER */
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+      background: #FAF6F0;
+      border-bottom: 1px solid #EDEAE4;
+      transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    header.scrolled {
+      background: rgba(250, 246, 240, 0.98);
+      box-shadow: 0 1px 12px rgba(0, 0, 0, 0.05);
+      border-bottom-color: #E8E4DE;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo img {
+      height: 42px;
+      width: auto;
+      display: block;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .logo:hover img {
+      transform: scale(1.02);
+      opacity: 0.98;
+    }
+
+    .header-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .about-link {
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      color: var(--maroon);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .about-link:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* HERO */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .hero-track {
+      position: absolute;
+      inset: 0;
+      width: 300%;
+      height: 100%;
+      display: flex;
+      gap: 0;
+      transform: translateX(0%);
+      animation: heroSlideRTL 12s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+
+    .hero-slide {
+      flex: 0 0 33.3333%;
+      width: 33.3333%;
+      height: 100%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      transform: translateZ(0);
+    }
+
+    .hero-slide.s1 { background-image: url("assets/1.png"); }
+    .hero-slide.s2 { background-image: url("assets/2.png"); }
+
+    @keyframes heroSlideRTL {
+      /* 6s per image: hold ~5s, slide ~1s */
+      0%, 41.5% { transform: translateX(0%); }
+      50% { transform: translateX(-33.3333%); }
+      50%, 91.5% { transform: translateX(-33.3333%); }
+      100% { transform: translateX(-66.6666%); }
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.5));
+      z-index: 1;
+    }
+
+    .hero-content {
+      max-width: 700px;
+      animation: fadeUp 1.2s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 26px;
+      font-weight: 700;
+    }
+
+    .hero p {
+      margin-bottom: 24px;
+      font-size: 1.2rem;
+      line-height: 1.55;
+    }
+
+    .cta {
+      padding: 14px 34px;
+      background: var(--saffron);
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 25px;
+      transition: 0.3s;
+      font-size: 1.05rem;
+      font-weight: 600;
+      font-family: 'Playfair Display', serif;
+      letter-spacing: 0.02em;
+    }
+
+    .cta:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    /* SECTION */
+    section {
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    section.intro {
+      padding-top: 40px;
+      padding-bottom: 40px;
+      background: #FFF4D6;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 0px;
+      max-width: none;
+      width: 100%;
+      margin: 24px 0 0px;
+    }
+
+    section.intro .divider {
+      margin: 10px auto 18px;
+    }
+
+    section.intro p {
+      margin: 8px 0;
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: var(--gold);
+      margin: 10px auto 30px;
+    }
+
+    /* VIDEO */
+    section.video {
+      padding-top: 30px;
+      padding-bottom: 30px;
+      background: linear-gradient(180deg, #FBF4E8 0%, #FFF1D7 100%);
+    }
+
+    .video h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+    }
+
+    .video .divider {
+      margin: 10px auto 18px;
+    }
+
+    .video p {
+      margin: 8px 0;
+    }
+
+    .video-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 20px 28px;
+      position: relative;
+    }
+
+    .video-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(600px 220px at 50% 38%, rgba(226, 161, 90, 0.28), transparent 60%),
+        radial-gradient(520px 260px at 50% 58%, rgba(197, 164, 109, 0.16), transparent 62%);
+      opacity: 0.95;
+    }
+
+    .video-embed-card {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      background: rgba(250, 246, 240, 0.55);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.14),
+        0 2px 0 rgba(255, 255, 255, 0.55) inset;
+      transform: translateZ(0);
+      transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+      margin: 18px auto 0;
+    }
+
+    .video-embed-card:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        0 24px 55px rgba(0, 0, 0, 0.16),
+        0 2px 0 rgba(255, 255, 255, 0.6) inset;
+      filter: saturate(1.02);
+    }
+
+    .video-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      background: #1b1b1b;
+    }
+
+    .video-thumb {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      filter: contrast(1.02) saturate(1.02);
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 55%, rgba(0,0,0,0.05), rgba(0,0,0,0.35));
+      transition: background 200ms ease;
+    }
+
+    .video-embed-card:hover .video-overlay {
+      background: radial-gradient(circle at 50% 55%, rgba(0,0,0,0.02), rgba(0,0,0,0.30));
+    }
+
+    .play-btn {
+      width: 84px;
+      height: 84px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 180ms ease, background 180ms ease;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+    }
+
+    .play-btn:hover {
+      transform: scale(1.04);
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .play-btn:active {
+      transform: scale(0.98);
+    }
+
+    .play-btn svg {
+      width: 28px;
+      height: 28px;
+      display: block;
+      color: #fff;
+      margin-left: 3px;
+      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.4));
+    }
+
+    .video-iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-meta {
+      margin-top: 18px;
+      text-align: center;
+      color: rgba(44, 44, 44, 0.92);
+    }
+
+    .video-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 0.01em;
+      margin-bottom: 6px;
+    }
+
+    .video-desc {
+      font-size: 0.98rem;
+      opacity: 0.85;
+      line-height: 1.55;
+      max-width: 52ch;
+      margin: 0 auto;
+    }
+
+    /* TRUST */
+    .trust {
+      font-weight: 500;
+      margin-top: 12px;
+      margin-bottom: 0;
+    }
+
+    
+     .custom-footer {
+  background: linear-gradient(180deg, #c2410c, #9a3412);
+}
+
+.footer-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.footer-subtitle {
+  font-size: 16px;
+  opacity: 0.9;
+  margin-bottom: 20px;
+}
+
+.footer-contact {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 5px 0;
+}
+
+.social-btn {
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 25px;
+  padding: 8px 18px;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+  background-color: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.footer-copy {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+    /* WHATSAPP FLOAT */
+    .whatsapp {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25D366;
+      color: white;
+      padding: 15px;
+      border-radius: 50%;
+      text-decoration: none;
+      width: 54px;
+      height: 54px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .whatsapp:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.26);
+    }
+
+    .whatsapp svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+      color: #fff;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* MOBILE */
+    @media(max-width: 768px) {
+      header {
+        padding: 14px 20px;
+      }
+
+      .hero {
+        align-items: flex-start;
+      }
+
+      .logo img {
+        height: 36px;
+      }
+
+      .about-link {
+        font-size: 0.82rem;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+        white-space: normal;
+      }
+
+      .hero-content {
+        padding: 0 14px;
+        margin-top: clamp(220px, 38vh, 380px);
+      }
+
+      .video h2 {
+        font-size: 1.8rem;
+      }
+
+      section.intro {
+        margin: 16px 0 8px;
+        border-radius: 0px;
+      }
+
+      .video-inner {
+        padding: 44px 16px 18px;
+      }
+
+      .play-btn {
+        width: 72px;
+        height: 72px;
+      }
+    }
+
+    /* DESKTOP: keep hero title in one line */
+    @media(min-width: 769px) {
+      .hero h1 {
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+
+<nav class="custom-navbar d-flex align-items-center justify-content-between">
+
+  <!-- Logo -->
+<div class="logo">
+  <img src="./assets/Vandan Transparent logo.png" alt="Vandan Logo" class="logo-img">
+</div>
+
+  <!-- Menu -->
+  <!-- Desktop -->
+<div class="d-none d-md-flex align-items-center">
+  <a href="https://www.vandanpandit.com/about-us/" target="_blank" class="nav-link-custom">
+    About Us
+  </a>
+</div>
+
+<!-- Mobile -->
+<div class="d-flex d-md-none">
+  <a href="https://www.vandanpandit.com/about-us/" target="_blank" class="nav-link-custom">
+    About Us
+  </a>
+</div>
+
+  </div>
+
+</nav>
+
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-track" aria-hidden="true">
+      <div class="hero-slide s1"></div>
+      <div class="hero-slide s2"></div>
+      <div class="hero-slide s1"></div>
+    </div>
+  </div>
+  <div class="hero-content">
+    <h1>Intereactive Video Guidance</h1>
+    <button class="cta" id="start-ritual">Start the Ritual</button>
+  </div>
+</section>
+
+<section class="intro">
+  <h2>Why Namkaran Sanskar is Important?</h2>
+  <div class="divider"></div>
+  <p>Namkaran Sanskar aligns your child’s identity with cosmic vibrations, ensuring positivity and prosperity.</p>
+  <p style="margin-top:0;">ॐ शुभारंभः</p>
+</section>
+
+<section class="video" id="video">
+  <div class="video-inner">
+    <div class="video-glow" aria-hidden="true"></div>
+
+    <h2>Namkaran Sanskar</h2>
+    <div class="divider"></div>
+    <p>Watch complete step-by-step intereactive guidance Video</p>
+
+    <div class="video-embed-card" data-video-id="ENmKD1HEjAM">
+      <div class="video-frame">
+        <img class="video-thumb" alt="Namkaran Sanskar video preview" src="https://i.ytimg.com/vi/ENmKD1HEjAM/maxresdefault.jpg" loading="lazy">
+        <div class="video-overlay">
+          <button class="play-btn" type="button" aria-label="Play video">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path fill="currentColor" d="M9 7.5v9l8-4.5-8-4.5Z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-meta">
+      <div class="video-title">Interactive Guidance Video</div>
+      <div class="video-desc">Tap play to begin the full step-by-step Namkaran Sanskar guidance in a calm, focused experience.</div>
+    </div>
+
+    <p class="trust">Trusted by 1000+ families across India</p>
+  </div>
+</section>
+
+<footer class="custom-footer text-center text-white">
+
+  <div class="container py-2">
+
+    <!-- Heading -->
+    <h2 class="footer-title">Connect With Us</h2>
+
+    <!-- Subtitle -->
+    <p class="footer-subtitle">
+      Begin your child's sacred journey with guidance rooted in tradition and care.
+    </p>
+
+    <!-- Contact Info -->
+    <p class="footer-contact">+91 8104030300</p>
+    <p class="footer-contact">ops@vandanpandit.com</p>
+
+    <!-- Social Buttons -->
+    <div class="d-flex justify-content-center gap-3 flex-wrap mt-3">
+
+      <a href="https://www.instagram.com/vandan_pandit.for.pooja/?utm_source=ig_web_button_share_sheet" target="_blank" class="social-btn">
+        <i class="bi bi-instagram"></i> Instagram
+      </a>
+
+      <a href="https://wa.me/918104030300" class="social-btn" target="_blank" rel="noopener noreferrer">
+        <i class="bi bi-whatsapp"></i> WhatsApp
+      </a>
+
+      <a href="https://www.youtube.com/@vandanpandit" target="_blank" class="social-btn">
+        <i class="bi bi-youtube"></i> YouTube
+      </a>
+
+    </div>
+
+    <!-- Copyright -->
+    <p class="footer-copy mt-4">
+      © 2026 Vandan Pandit. All rights reserved.
+    </p>
+
+  </div>
+
+</footer>
+
+
+<a href="https://wa.me/918104030300" class="whatsapp" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path fill="currentColor" d="M12.04 2C6.53 2 2.06 6.48 2.06 12c0 1.97.57 3.86 1.65 5.48L2 22l4.65-1.64A9.9 9.9 0 0 0 12.04 22C17.55 22 22 17.52 22 12S17.55 2 12.04 2Zm0 18.1c-1.7 0-3.34-.5-4.74-1.44l-.34-.22-2.76.98.9-2.69-.22-.35A8.06 8.06 0 0 1 4 12c0-4.43 3.6-8.04 8.04-8.04 4.43 0 8.03 3.61 8.03 8.04s-3.6 8.06-8.03 8.06Zm4.63-6.06c-.25-.12-1.46-.72-1.68-.8-.23-.09-.4-.12-.57.12-.17.25-.66.8-.81.97-.15.17-.3.2-.55.07-.25-.12-1.07-.4-2.03-1.26-.75-.67-1.26-1.5-1.4-1.75-.15-.25-.02-.39.1-.51.11-.11.25-.3.37-.45.12-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.12-.57-1.38-.78-1.9-.2-.48-.4-.42-.57-.42h-.48c-.17 0-.45.07-.68.32-.23.25-.9.88-.9 2.15 0 1.27.92 2.5 1.05 2.67.12.17 1.82 2.78 4.41 3.9.62.27 1.1.43 1.47.55.62.2 1.18.17 1.62.1.5-.07 1.46-.6 1.66-1.18.2-.57.2-1.06.14-1.18-.06-.12-.22-.2-.48-.32Z"/>
+  </svg>
+</a>
+
+<script>
+  // Header scroll effect
+  window.addEventListener("scroll", () => {
+    document.getElementById("header").classList.toggle("scrolled", window.scrollY > 50);
+  });
+
+  // Start ritual -> scroll to video
+  const startRitualBtn = document.getElementById("start-ritual");
+  const videoSection = document.getElementById("video");
+  if (startRitualBtn && videoSection) {
+    startRitualBtn.addEventListener("click", () => {
+      videoSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  // Premium YouTube embed: thumbnail -> autoplay iframe
+  function buildYouTubeIframe(videoId) {
+    const iframe = document.createElement("iframe");
+    iframe.className = "video-iframe";
+    iframe.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+    iframe.loading = "lazy";
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+    return iframe;
+  }
+
+  document.querySelectorAll(".video-embed-card").forEach((card) => {
+    const videoId = card.getAttribute("data-video-id");
+    const frame = card.querySelector(".video-frame");
+    const btn = card.querySelector(".play-btn");
+    const thumb = card.querySelector(".video-thumb");
+
+    if (thumb) {
+      thumb.addEventListener(
+        "error",
+        () => {
+          thumb.src = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+        },
+        { once: true }
+      );
+    }
+
+    function play() {
+      if (!videoId || !frame) return;
+      frame.innerHTML = "";
+      frame.appendChild(buildYouTubeIframe(videoId));
+    }
+
+    if (btn) btn.addEventListener("click", play);
+    card.addEventListener("click", (e) => {
+      const target = e.target;
+      if (target && target.closest && target.closest("a")) return;
+      play();
+    });
+  });
+</script>
+
+</body>
+</html>
